@@ -1,5 +1,4 @@
-FROM blacklabelops/alpine
-MAINTAINER Steffen Bleul <blacklabelops@itbleul.de>
+FROM alpine:edge
 
 # rsnapshot version (e.g. 1.4.2-r0)
 ARG RSNAPSHOT_VERSION=latest
@@ -11,6 +10,9 @@ COPY imagescripts /usr/bin/rsnapshot.d
 RUN apk upgrade --update && \
     if  [ "${RSNAPSHOT_VERSION}" = "latest" ]; \
       then apk add rsnapshot ; \
+          # Install the package you need to your DB
+           apk add bash tzdata ; \
+           apk add postgresql-client ; \
       else apk add "rsnapshot=${RSNAPSHOT_VERSION}" ; \
     fi && \
     mkdir -p /usr/bin/rsnapshot.d && \
@@ -20,6 +22,7 @@ RUN apk upgrade --update && \
 
 ENV BACKUP_INTERVAL= \
     BACKUP_DIRECTORIES= \
+    BACKUP_SCRIPTS= \
     DELAYED_START= \
     RSNAPSHOT_HOURLY_TIMES= \
     RSNAPSHOT_DAILY_TIMES= \

@@ -87,6 +87,21 @@ do
 done
 IFS=$SAVEIFS
 
+backup_scripts=""
+
+if [ -n "${BACKUP_SCRIPTS}" ]; then
+  backup_scripts=${BACKUP_SCRIPTS}
+fi
+
+SAVEIFS=$IFS
+IFS=';'
+for dir_scripts in $backup_scripts
+do
+  tab_dir_sc=$(sed -e 's/ [ ]*/\t/g' <<< $dir_scripts )
+  echo -e backup_script'\t'$tab_dir_sc >> /etc/rsnapshot.conf
+done
+IFS=$SAVEIFS
+
 if [ -n "${DELAYED_START}" ]; then
   sleep ${DELAYED_START}
 fi

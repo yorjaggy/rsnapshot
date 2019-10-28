@@ -1,5 +1,4 @@
-FROM blacklabelops/rsnapshot
-MAINTAINER Steffen Bleul <blacklabelops@itbleul.de>
+FROM base_image_rsnapshot:alpine_edge
 
 # build parameters
 ARG JOBBER_VERSION=v1.1
