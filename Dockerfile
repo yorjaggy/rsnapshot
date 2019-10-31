@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.9
 
 # rsnapshot version (e.g. 1.4.2-r0)
 ARG RSNAPSHOT_VERSION=latest
@@ -6,13 +6,13 @@ ARG RSNAPSHOT_VERSION=latest
 # install rsnapshot
 COPY configuration/rsnapshot.conf.default /etc/rsnapshot.conf
 COPY imagescripts /usr/bin/rsnapshot.d
-
+ENV MONGO_TOOLS_VERSION=4.0.5-r0
 RUN apk upgrade --update && \
     if  [ "${RSNAPSHOT_VERSION}" = "latest" ]; \
       then apk add rsnapshot ; \
-          # Install the package you need to your DB
            apk add bash tzdata ; \
-           apk add postgresql-client ; \
+          # Install the package you need to your DB
+           apk add mongodb-tools=${MONGO_TOOLS_VERSION} ; \
       else apk add "rsnapshot=${RSNAPSHOT_VERSION}" ; \
     fi && \
     mkdir -p /usr/bin/rsnapshot.d && \
