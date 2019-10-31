@@ -10,9 +10,7 @@ COPY imagescripts /usr/bin/rsnapshot.d
 RUN apk upgrade --update && \
     if  [ "${RSNAPSHOT_VERSION}" = "latest" ]; \
       then apk add rsnapshot ; \
-          # Install the package you need to your DB
            apk add bash tzdata ; \
-           apk add postgresql-client ; \
       else apk add "rsnapshot=${RSNAPSHOT_VERSION}" ; \
     fi && \
     mkdir -p /usr/bin/rsnapshot.d && \
