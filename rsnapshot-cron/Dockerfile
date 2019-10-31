@@ -1,4 +1,4 @@
-FROM base_image_rsnapshot:alpine_edge
+FROM base_image_rsnapshot_mongo:alpine_39
 
 # build parameters
 ARG JOBBER_VERSION=v1.1
